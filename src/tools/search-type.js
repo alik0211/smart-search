@@ -19,6 +19,10 @@ const typesList = [
       }
 
       const isValid = list.every((rawBlock) => {
+        if (rawBlock === "") {
+          return false;
+        }
+
         const block = Number(rawBlock);
 
         if (!Number.isInteger(block)) {
