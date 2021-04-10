@@ -20,8 +20,8 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
   routes,
+  base: "/smart-search/",
 });
 
 export default router;
