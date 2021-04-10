@@ -8,10 +8,13 @@
         <legend class="uk-legend">Smart search</legend>
 
         <div class="uk-margin">
-          <div class="uk-search uk-search-default uk-width-1-1">
-            <span uk-search-icon></span>
+          <div class="uk-inline uk-width-1-1">
+            <span class="uk-form-icon" uk-icon="icon: search"></span>
             <input
-              class="uk-search-input"
+              class="uk-input"
+              :class="{
+                'uk-form-danger': displayError,
+              }"
               type="search"
               ref="searchElement"
               @input="handleChange"
@@ -20,23 +23,21 @@
           </div>
         </div>
 
-        <div class="uk-margin">
-          <button
-            class="uk-button uk-button-primary"
-            :class="{
-              'uk-button-danger': displayError,
-            }"
-            :disabled="isLoading || clearedSearchString.length === 0"
-          >
-            <div v-if="displayError" class="uk-text-normal">
-              Unknown search type
-            </div>
-            <div v-else-if="isLoading" uk-spinner="ratio: 0.75"></div>
-            <div v-else class="uk-text-normal">
-              {{ this.searchType ? `Search by ${this.searchType}` : "Search" }}
-            </div>
-          </button>
-        </div>
+        <button
+          class="uk-button uk-button-primary"
+          :class="{
+            'uk-button-danger': displayError,
+          }"
+          :disabled="isLoading || clearedSearchString.length === 0"
+        >
+          <div v-if="displayError" class="uk-text-normal">
+            Unknown search type
+          </div>
+          <div v-else-if="isLoading" uk-spinner="ratio: 0.75"></div>
+          <div v-else class="uk-text-normal">
+            {{ this.searchType ? `Search by ${this.searchType}` : "Search" }}
+          </div>
+        </button>
       </fieldset>
     </form>
   </div>
