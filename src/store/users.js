@@ -5,7 +5,7 @@ const generateFakeUser = () => {
   return {
     id: faker.datatype.uuid(),
     email: faker.internet.email(),
-    phone: faker.phone.phoneNumber(),
+    phone: faker.phone.phoneNumberFormat(),
     avatar: faker.internet.avatar(),
     nickname: faker.internet.userName(),
     fullName: `${faker.name.findName()} ${faker.name.lastName()}`,
