@@ -10,16 +10,6 @@ const typesList = [
     },
   },
   {
-    name: "phone",
-    validate: (value) => {
-      // https://stackoverflow.com/a/29767609/10789936
-      // eslint-disable-next-line no-useless-escape
-      const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-
-      return regex.test(value);
-    },
-  },
-  {
     name: "ip",
     validate: (value) => {
       const list = value.split(".");
@@ -42,9 +32,22 @@ const typesList = [
     },
   },
   {
+    name: "phone",
+    validate: (value) => {
+      const matchResult = value.match(/\d/g);
+
+      if (!Array.isArray(matchResult)) {
+        return false;
+      }
+
+      // https://qr.ae/pGTKle
+      return matchResult.length >= 7 && matchResult.length <= 15;
+    },
+  },
+  {
     name: "fullName",
     validate: (value) => {
-      const regex = /^([A-Za-z'`~.-]+(\s|$)){2}$/;
+      const regex = /^([A-Za-zА-ЯЁа-яё'`~.-]+(\s|$)){2}$/;
 
       return regex.test(value);
     },
@@ -52,7 +55,7 @@ const typesList = [
   {
     name: "nickname",
     validate: (value) => {
-      const regex = /^@?[A-Za-z'`~._-]+$/;
+      const regex = /^@?[A-Za-z\d'`~._-]+$/;
 
       return regex.test(value);
     },
