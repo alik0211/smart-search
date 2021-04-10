@@ -1,5 +1,12 @@
 <template>
   <div class="uk-padding">
+    <div class="uk-width-1-2@m uk-align-center">
+      <router-link
+        :to="{ name: ROUTES.home.name }"
+        class="uk-icon-link"
+        uk-icon="icon: arrow-left; ratio: 2"
+      ></router-link>
+    </div>
     <div class="uk-card uk-card-default uk-width-1-2@m uk-align-center">
       <div v-if="isLoading" class="uk-padding uk-flex uk-flex-center">
         <div uk-spinner="ratio: 3"></div>
@@ -43,6 +50,8 @@
 </template>
 
 <script>
+import { ROUTES } from "../constants";
+
 export default {
   props: {
     id: {
@@ -53,6 +62,8 @@ export default {
   data() {
     return {
       isLoading: false,
+
+      ROUTES,
     };
   },
   computed: {
