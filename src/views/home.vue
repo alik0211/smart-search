@@ -2,7 +2,7 @@
   <div class="uk-padding">
     <form
       @submit.prevent="handleSubmit"
-      class="uk-form-width-large uk-align-center"
+      class="uk-width-1-2@m uk-width-1-3@l uk-align-center"
     >
       <fieldset class="uk-fieldset">
         <legend class="uk-legend">Smart search</legend>
