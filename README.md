@@ -1,12 +1,14 @@
-# smart-search
+# Smart search
 
 ## Project setup
 ```
-yarn install
+yarn --frozen-lockfile
 ```
 
 ### Compiles and hot-reloads for development
 ```
+yarn start
+# or
 yarn serve
 ```
 
