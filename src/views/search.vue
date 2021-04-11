@@ -1,17 +1,21 @@
 <template>
   <div class="uk-padding">
-    <div class="uk-width-1-2@m uk-align-center">
-      <router-link
-        :to="{ name: ROUTES.home.name }"
-        class="uk-icon-link"
-        uk-icon="icon: arrow-left; ratio: 2"
-      ></router-link>
+    <div v-if="isLoading" class="uk-flex uk-flex-center">
+      <div uk-spinner="ratio: 3"></div>
     </div>
-    <div class="uk-card uk-card-default uk-width-1-2@m uk-align-center">
-      <div v-if="isLoading" class="uk-padding uk-flex uk-flex-center">
-        <div uk-spinner="ratio: 3"></div>
+    <template v-else>
+      <div class="uk-width-1-2@m uk-width-1-3@l uk-align-center">
+        <router-link
+          :to="{ name: ROUTES.home.name }"
+          class="uk-icon-link"
+          uk-icon="icon: arrow-left; ratio: 2"
+        ></router-link>
       </div>
-      <template v-else>
+      <div
+        v-for="user in users"
+        :key="user.id"
+        class="uk-card uk-card-default uk-width-1-2@m uk-width-1-3@l uk-align-center"
+      >
         <div class="uk-card-header">
           <div class="uk-grid-small uk-flex-middle" uk-grid>
             <div class="uk-width-auto">
@@ -44,17 +48,21 @@
             <span>{{ user.email }}</span>
           </p>
         </div>
-      </template>
-    </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-import { ROUTES } from "../constants";
+import { ROUTES } from "@/constants";
 
 export default {
   props: {
-    id: {
+    type: {
+      type: String,
+      required: true,
+    },
+    text: {
       type: String,
       required: true,
     },
@@ -62,31 +70,32 @@ export default {
   data() {
     return {
       isLoading: false,
+      usersIds: [],
 
       ROUTES,
     };
   },
   computed: {
-    user() {
-      return this.$store.state.users.byId[this.id];
+    usersById() {
+      return this.$store.state.users.byId;
+    },
+    users() {
+      return this.usersIds.map((userId) => this.usersById[userId]);
     },
   },
   async created() {
-    if (this.user) {
-      return;
-    }
-
     this.isLoading = true;
 
-    try {
-      await this.$store.dispatch("users/getById", this.id);
-    } catch (error) {
-      // Handle error
-    } finally {
-      this.isLoading = false;
-    }
+    const { type, text } = this;
+
+    const users = await this.$store.dispatch("users/getUsers", {
+      type,
+      text,
+    });
+
+    this.usersIds = users.map((user) => user.id);
+
+    this.isLoading = false;
   },
 };
 </script>
-
-<style></style>

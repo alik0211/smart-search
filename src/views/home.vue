@@ -28,12 +28,11 @@
           :class="{
             'uk-button-danger': displayError,
           }"
-          :disabled="isLoading || clearedSearchString.length === 0"
+          :disabled="clearedSearchString.length === 0"
         >
           <div v-if="displayError" class="uk-text-normal">
             Unknown search type
           </div>
-          <div v-else-if="isLoading" uk-spinner="ratio: 0.75"></div>
           <div v-else class="uk-text-normal">
             {{ this.searchType ? `Search by ${this.searchType}` : "Search" }}
           </div>
@@ -50,7 +49,6 @@ import { getSearchType } from "@/tools/search-type";
 export default {
   data() {
     return {
-      isLoading: false,
       displayError: false,
       searchString: "",
     };
@@ -77,23 +75,13 @@ export default {
         return;
       }
 
-      this.isLoading = true;
-
-      try {
-        const user = await this.$store.dispatch("users/getBySearchString", {
+      this.$router.push({
+        name: ROUTES.search.name,
+        query: {
           type: this.searchType,
-          searchString: this.clearedSearchString,
-        });
-
-        this.$router.push({
-          name: ROUTES.user.name,
-          params: { id: user.id },
-        });
-      } catch (error) {
-        // Handle error
-      } finally {
-        this.isLoading = false;
-      }
+          text: this.clearedSearchString,
+        },
+      });
     },
   },
   mounted() {

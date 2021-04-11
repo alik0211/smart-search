@@ -12,10 +12,10 @@ const routes = [
     ...ROUTES.home,
   },
   {
-    path: "/users/:id",
-    props: true,
-    component: () => import("@/views/user.vue"),
-    ...ROUTES.user,
+    path: "/search",
+    props: (route) => route.query,
+    component: () => import("@/views/search.vue"),
+    ...ROUTES.search,
   },
 ];
 
