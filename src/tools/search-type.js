@@ -48,7 +48,7 @@ const typesList = [
   {
     name: "fullName",
     validate: (value) => {
-      const regex = /^([A-Za-zА-ЯЁа-яё'`~.-]+(\s|$)){2}$/;
+      const regex = /^([A-Za-zА-ЯЁа-яё'`~.-]+(\s|$)){2,}$/;
 
       return regex.test(value);
     },
