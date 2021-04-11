@@ -1,3 +1,5 @@
+import { isValidPhoneNumber } from "libphonenumber-js";
+
 const typesList = [
   {
     name: "email",
@@ -38,14 +40,9 @@ const typesList = [
   {
     name: "phone",
     validate: (value) => {
-      const matchResult = value.match(/\d/g);
+      const isValid = isValidPhoneNumber(value);
 
-      if (!Array.isArray(matchResult)) {
-        return false;
-      }
-
-      // https://qr.ae/pGTKle
-      return matchResult.length >= 7 && matchResult.length <= 15;
+      return isValid;
     },
   },
   {
